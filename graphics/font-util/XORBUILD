@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=font-util
+ver=1.4.1
+dependencies=()
+
+url=https://www.x.org/archive//individual/font/font-util-1.4.1.tar.xz
+prefix=/var/packager/prefixes/$name
+
+configure() {
+	sudo ../configure --prefix=/usr &&
+	sudo make
+}
+
+build() {
+	sudo make DESTIR="$prefix" install
+}
+

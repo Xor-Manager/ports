@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=mtdev
+ver=1.1.5
+dependencies=()
+
+make_dependencies=""
+url=https://bitmath.org/code/mtdev/mtdev-1.1.5.tar.bz2
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo ../configure --prefix=/usr --disable-static &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=cython
+ver=3.0.12
+dependencies=(
+pip3
+)
+
+make_dependencies=""
+url=https://github.com/cython/cython/releases/download/3.0.12/cython-3.0.12.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo pip3 wheel -w dist --no-build-isolation --no-deps --no-cache-dir $PWD/..
+}
+
+build() {
+	sudo pip3 install --no-index --find-links dist --no-user Cython
+}
+

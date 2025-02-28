@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=spirv-headers
+ver=1.4.304.1
+dependencies=(
+cmake
+)
+
+make_dependencies=""
+url=https://github.com/KhronosGroup/SPIRV-Headers/archive/vulkan-sdk-1.4.304.1/SPIRV-Headers-vulkan-sdk1.4.304.1.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo cmake -D CMAKE_INSTALL_prefix=/usr -G Ninja .. &&
+	sudo ninja
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+}
+

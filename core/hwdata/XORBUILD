@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=hwdata
+ver=0.392
+dependencies=()
+
+make_dependencies=""
+url=https://github.com/vcrhonek/hwdata/archive/v0.392/hwdata-0.392.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	pushd ..
+	sudo ./configure --prefix=/usr --disable-blacklist
+	popd
+}
+
+build() {
+	pushd ..
+		sudo make DESTDIR="$prefix" install
+	popd
+}
+

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=freetype
+ver=2.13.3
+dependencies=()
+
+make_dependencies=""
+url=https://downloads.sourceforge.net/freetype/freetype-2.13.3.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sed -ri "s:.*(AUX_MODULES.*valid):\1:" ../modules.cfg &&
+
+	sed -r "s:.*(#.*SUBPIXEL_RENDERING) .*:\1:" \
+		-i ../include/freetype/config/ftoption.h &&
+
+	sudo ../configure --prefix=/usr --enable-freetype-config --disable-static &&
+	sudo make
+
+
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

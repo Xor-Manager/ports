@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=which
+ver=2.21
+dependencies=()
+
+make_dependencies=""
+url=https://ftp.gnu.org/gnu/which/which-2.21.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo ../configure --prefix=/usr
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

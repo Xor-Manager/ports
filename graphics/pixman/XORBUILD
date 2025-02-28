@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=pixman
+ver=0.44.2
+dependencies=()
+
+make_dependencies=""
+url=https://www.cairographics.org/releases/pixman-0.44.2.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson setup --prefix=/usr --buildtype=release .. &&
+	sudo ninja
+}
+
+build() {
+	sudo DESTDIR=$prefix ninja install
+}
+

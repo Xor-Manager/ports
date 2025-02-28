@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=xauth
+ver=1.1
+dependencies=()
+
+make_dependencies=""
+url=https://www.x.org/archive//individual/app/xauth-1.1.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo ../configure --prefix=/usr &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

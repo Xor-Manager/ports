@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=libpng
+ver=1.6.46
+dependencies=()
+
+make_dependencies=""
+url=https://downloads.sourceforge.net/libpng/libpng-1.6.46.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo ../configure --prefix=/usr --disable-static &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

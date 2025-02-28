@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=libuv
+ver=1.50.0
+dependencies=()
+
+make_dependencies=""
+url=https://dist.libuv.org/dist/v1.50.0/libuv-v1.50.0.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo sh ../autogen.sh &&
+	sudo ../configure --prefix=/usr --disable-static &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

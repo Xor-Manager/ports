@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=wayland
+ver=1.23.0
+dependencies=(
+libxml2
+)
+
+make_dependencies=""
+url=https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.23.0/downloads/wayland-1.23.0.tar.xz
+prefix=/var/xor/prefixes/$name
+
+configure() {
+	sudo meson setup ..            \
+	      --prefix=/usr       \
+	      --buildtype=release \
+	      -D documentation=false &&
+	sudo ninja
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+}
+

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=cmake
+ver=3.31.5
+dependencies=(
+libarchive
+libuv
+)
+
+make_dependencies=""
+url=https://cmake.org/files/v3.31/cmake-3.31.5.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+
+	sudo sed -i '/"lib64"/s/64//' ../Modules/GNUInstallDirs.cmake &&
+
+	sudo ../bootstrap --prefix=/usr        \
+		    --system-libs        \
+		    --mandir="$prefix"  \
+		    --no-system-jsoncpp  \
+		    --no-system-cppdap   \
+		    --no-system-librhash \
+		    --docdir="$prefix" &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=gobject-introspection
+ver=1.82.0
+dependencies=(
+glib
+)
+
+make_dependencies=""
+url=https://download.gnome.org/sources/gobject-introspection/1.82/gobject-introspection-1.82.0.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson setup .. --prefix=/usr --buildtype=release &&
+	sudo ninja 
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+}
+

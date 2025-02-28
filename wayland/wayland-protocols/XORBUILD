@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=wayland-protocols
+ver=1.40
+dependencies=(
+wayland
+)
+
+make_dependencies=""
+url=https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/1.40/downloads/wayland-protocols-1.40.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson setup --prefix=/usr --buildtype=release .. &&
+	sudo ninja
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+}
+

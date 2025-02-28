@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=alacritty
+ver=0.15.1
+dependencies=(
+freetype
+libxcb
+fontconfig
+xkbcommon
+python
+)
+
+make_dependencies=""
+url=https://github.com/alacritty/alacritty/archive/refs/tags/v0.15.1.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	echo "Without configure"
+}
+
+build() {
+	sudo cargo build --release --target-dir="$prefix"
+}
+

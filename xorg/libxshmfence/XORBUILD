@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=libxshmfence
+ver=1.3
+dependencies=()
+
+make_dependencies=""
+url=https://www.x.org/archive//individual/lib/libxshmfence-1.3.tar.gz
+prefix=$MANAGER_prefix/$name
+
+configure() {
+	sudo ../configure --prefix=/usr
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

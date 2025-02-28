@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=elogind
+ver=255.17
+dependencies=()
+
+make_dependencies=""
+url=https://github.com/elogind/elogind/archive/v255.17/elogind-255.17.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson setup .. --prefix=/usr --buildtype=release -D man=auto -D docdir="$prefix"/usr/share/doc/elogind-255.17 -D cgroup-controller=elogind -D dev-kvm-mode=0660 -D dbuspolicydir=/etc/dbus-1/system.d &&
+	sudo ninja
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+}
+

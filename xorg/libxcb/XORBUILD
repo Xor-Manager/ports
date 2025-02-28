@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=libxcb
+ver=1.17.0
+dependencies=(
+libxau
+xcb-proto
+)
+
+make_dependencies=""
+url=https://xorg.freedesktop.org/archive/individual/lib/libxcb-1.17.0.tar.xz
+prefix=/var/xor/prefixes/$name
+
+configure() {
+	sudo ../configure --prefix=/usr --without-doxygen &&
+	sudo LC_ALL=en_US.UTF-8 make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

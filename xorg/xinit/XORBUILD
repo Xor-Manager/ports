@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=xinit
+ver=1.4.3
+dependencies=()
+
+make_dependencies=""
+url=https://www.x.org/pub/individual/app/xinit-1.4.3.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo ../configure --prefix=/usr --with-xinitdir=/etc/X11/app_defaults &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install &&
+}
+

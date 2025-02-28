@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=libsm
+ver=1.2.5
+dependencies=()
+
+make_dependencies=""
+url=https://www.x.org/archive//individual/lib/libSM-1.2.5.tar.xz
+prefix=$MANAGER_prefix/$name
+
+configure() {
+	sudo ../configure --prefix=/usr &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

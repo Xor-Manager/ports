@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=xorg-server
+ver=21.1.13
+
+dependencies=(
+libxcvt
+pixman
+libxkbfile
+libxfont2
+font-util
+libxdmcp
+xkeyboardconfig
+libtirpc
+libepoxy
+libpciaccess
+)
+#xorg-Fonts
+#xorg-libinput
+
+url=https://www.x.org/pub/individual/xserver/xorg-server-21.1.13.tar.xz
+prefix=/var/xor/prefixes/$name
+
+configure(){
+
+        sudo meson setup ..               \
+              --prefix=/usr  \
+              --localstatedir=/var   \
+              --sysconfdir=/usr   \
+              -D glamor=true         \
+              -D systemd_logind=true \
+              -D xkb_output_dir=/var/lib/xkb &&
+
+        sudo ninja
+}
+
+build(){
+        sudo ninja DESTDIR="$prefix" install
+}

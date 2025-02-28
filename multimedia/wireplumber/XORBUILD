@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=wireplumber
+ver=0.5.8
+dependencies=(
+pipewire
+elogind
+glib
+)
+
+make_dependencies=""
+url=https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/0.5.8/wireplumber-0.5.8.tar.bz2
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson setup --prefix=/usr --buildtype=release -D system-lua=false .. &&
+	sudo ninja
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+}
+

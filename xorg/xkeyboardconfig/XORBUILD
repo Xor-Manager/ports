@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=xkeyboardconfig
+ver=2.44
+dependencies=()
+
+make_dependencies=""
+url=https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-2.44.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson setup --prefix=/usr --buildtype=release .. &&
+	sudo ninja
+}
+
+build() {
+	DESTDIR="$prefix" sudo ninja install
+}
+

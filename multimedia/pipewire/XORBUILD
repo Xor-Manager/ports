@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=pipewire
+ver=1.2.7
+dependencies=(
+glib
+)
+
+make_dependencies=""
+url=https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/1.2.7/pipewire-1.2.7.tar.bz2
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson setup .. --prefix=/usr --buildtype=release -D session-managers="[]" &&
+	sudo ninja
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+}
+

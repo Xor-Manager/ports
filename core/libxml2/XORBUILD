@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=libxml2
+ver=2.13.5
+dependencies=()
+
+make_dependencies=""
+url=https://download.gnome.org/sources/libxml2/2.13/libxml2-2.13.5.tar.xz
+prefix=/var/xor/prefixes/$name
+
+configure() {
+
+	#if [ ! -d "$prefix/etc" ]; then
+	#	sudo mkdir -p $prefix/etc
+	#fi
+
+	sudo ../configure --prefix=/usr           \
+            --sysconfdir=/etc       \
+            --disable-static        \
+            --with-history          \
+            --with-icu              \
+            PYTHON=/usr/bin/python3 \
+            --docdir=$prefix &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install &&
+
+	if [ -f "$prefix/usr/lib/libxml2.la" ]; then
+		sudo rm -vf $prefix/usr/lib/libxml2.la
+	fi
+
+	if [ -f "$prefix/usr/bin/xml2-config" ]; then
+		sudo sed '/libs=/s/xml2.*/xml2"/' -i /usr/bin/xml2-config
+	fi
+}
+

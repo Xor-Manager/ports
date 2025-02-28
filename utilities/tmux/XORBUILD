@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=tmux
+ver=3.5a
+dependencies=(
+ncurses
+libevent
+)
+
+make_dependencies=""
+url=https://github.com/tmux/tmux/releases/download/3.5a/tmux-3.5a.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo ../configure --prefix=/usr &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

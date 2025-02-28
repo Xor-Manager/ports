@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=libxcvt
+ver=0.1.3
+dependencies=()
+
+make_dependencies=""
+url=https://www.x.org/archive//individual/lib/libxcvt-0.1.3.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson setup --prefix=/usr --buildtype=release .. &&
+	sudo ninja
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+}
+

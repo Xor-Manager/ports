@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=obs-studio
+ver=31.0.1
+dependencies=(
+ffmpeg
+jansson
+libXinerama
+libxkbcommon-x11
+mbedtls
+rnnoise
+pciutils
+qt6-svg
+jack
+gtk-update-icon-cache
+pipewire
+libxcomposite
+)
+url="https://github.com/obsproject/obs-studio/releases/download/31.0.1/OBS-Studio-31.0.1-Sources.tar.gz"
+prefix=/var/packager/prefixes/$name
+
+configure() {
+	sudo cmake .. -DCMAKE_INSTALL_prefix=/usr -DENABLE_BROWSER=ON &&
+	sudo cmake --build .
+}
+
+build() {
+	cmake DESTDIR="$prefix" --install .
+}
+

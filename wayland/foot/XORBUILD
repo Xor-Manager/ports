@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=foot
+ver=1.20.2
+dependencies=(
+tllist
+fcft
+wayland
+pixman
+fontconfig
+freetype
+xkbcommon
+)
+
+make_dependencies=""
+url=https://codeberg.org/dnkl/foot/archive/1.20.2.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson --prefix=/usr --buildtype=release -Db_lto=true .. &&
+	sudo ninja
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+}
+

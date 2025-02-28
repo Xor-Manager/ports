@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=libxxf86vm
+ver=1.1.6
+dependencies=(
+	
+)
+
+make_dependencies=""
+url=https://www.x.org/archive//individual/lib/libXxf86vm-1.1.6.tar.xz
+prefix=$MANAGER_prefix/$name
+
+configure() {
+	sudo ../configure --prefix="$prefix"
+	sudo make
+}
+
+build() {
+	sudo make install
+}
+

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=cbindgen
+ver=0.28.0
+dependencies=(
+rustc
+)
+
+make_dependencies=""
+url=https://github.com/mozilla/cbindgen/archive/v0.28.0/cbindgen-0.28.0.tar.gz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	echo "Without configure"
+}
+
+build() {
+	pushd ..
+	sudo cargo build --release --target-dir "$prefix"
+	popd
+}
+

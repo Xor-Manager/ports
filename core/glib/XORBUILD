@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=glib
+ver=2.82.4
+dependencies=(
+docutils
+)
+
+make_dependencies=""
+url=https://download.gnome.org/sources/glib/2.82/glib-2.82.4.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	#if [ ! -d "$prefix"/include ]; then
+	#	sudo mkdir -p "$prefix"/include
+	#fi
+
+	sudo meson setup .. --prefix=/usr --buildtype=release -D introspection=disabled -D glib_debug=disabled -D man-pages=enabled -D sysprof=disabled &&
+	sudo ninja
+
+}
+
+build() {
+	sudo ninja DESTDIR="$prefix" install
+
+	pushd ..
+		sudo wget https://download.gnome.org/sources/gobject-introspection/1.82/gobject-introspection-1.82.0.tar.xz
+		sudo tar xf gobject-introspection-1.82.0.tar.xz &&
+
+		sudo meson setup gobject-introspection-1.82.0 gi-build --prefix=/usr --buildtype=release &&
+		sudo ninja -C gi-build &&
+
+		sudo ninja DESTDIR="$prefix" -C gi-build install
+	popd
+}
+
