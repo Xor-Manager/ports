@@ -4,7 +4,7 @@ set -e
 name=cython
 ver=3.0.12
 dependencies=(
-pip3
+python3
 )
 
 make_dependencies=""

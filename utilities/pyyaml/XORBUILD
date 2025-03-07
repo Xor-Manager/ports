@@ -6,8 +6,8 @@ ver=6.0.2
 dependencies=(
 cython
 libyaml
+python3
 )
-#pip3
 
 make_dependencies=""
 url=https://files.pythonhosted.org/packages/source/P/PyYAML/pyyaml-6.0.2.tar.gz
