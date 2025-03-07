@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=glib
 ver=2.82.4
 dependencies=(
@@ -11,29 +9,26 @@ docutils
 
 make_dependencies=""
 url=https://download.gnome.org/sources/glib/2.82/glib-2.82.4.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	#if [ ! -d "$prefix"/include ]; then
-	#	sudo mkdir -p "$prefix"/include
-	#fi
-
-	sudo meson setup .. --prefix=/usr --buildtype=release -D introspection=disabled -D glib_debug=disabled -D man-pages=enabled -D sysprof=disabled &&
-	sudo ninja
-
+	sudo meson setup build --prefix=/usr --buildtype=release -D introspection=enabled -D glib_debug=disabled -D man-pages=enabled -D sysprof=disabled &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix" install
+	sudo ninja install -C build
 
-	pushd ..
-		sudo wget https://download.gnome.org/sources/gobject-introspection/1.82/gobject-introspection-1.82.0.tar.xz
-		sudo tar xf gobject-introspection-1.82.0.tar.xz &&
+	#pushd ..
+	#	sudo wget https://download.gnome.org/sources/gobject-introspection/1.82/gobject-introspection-1.82.0.tar.xz
+	#	sudo tar xf gobject-introspection-1.82.0.tar.xz &&
 
-		sudo meson setup gobject-introspection-1.82.0 gi-build --prefix=/usr --buildtype=release &&
-		sudo ninja -C gi-build &&
+	#	sudo meson setup gobject-introspection-1.82.0 gi-build --prefix=/usr --buildtype=release &&
+	#	sudo ninja -C gi-build &&
+	#	sudo DESTDIR="$prefix" ninja -C gi-build install
+	#popd
 
-		sudo ninja DESTDIR="$prefix" -C gi-build install
-	popd
+		#echo $(pwd)
+		#sudo meson configure -D introspection=enabled &&
+		#sudo ninja
+		#sudo DESTDIR="$prefix" ninja install
 }
-

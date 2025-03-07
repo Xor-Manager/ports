@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libxfont2
 ver=2.0.7
 dependencies=(
@@ -11,14 +9,13 @@ libfontenc
 
 make_dependencies=""
 url=https://www.x.org/archive//individual/lib/libXfont2-2.0.7.tar.xz
-prefix=$MANAGER_prefix/$name
 
 configure() {
-	sudo ../configure --prefix=/usr --disable-devel-docs &&
+	sudo ./configure --prefix=/usr --disable-devel-docs &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 

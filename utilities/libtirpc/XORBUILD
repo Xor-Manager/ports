@@ -1,22 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libtirpc
 ver=1.3.6
 dependencies=()
 
 make_dependencies=""
 url=https://downloads.sourceforge.net/libtirpc/libtirpc-1.3.6.tar.bz2
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo ../configure --prefix=/usr --sysconfdir=/etc --disable-static --disable-gssapi
+	sudo ./configure --prefix=/usr --sysconfdir=/etc --disable-static --disable-gssapi
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 

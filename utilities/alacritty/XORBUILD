@@ -10,7 +10,8 @@ freetype
 libxcb
 fontconfig
 xkbcommon
-python
+python3
+libxcursor
 )
 
 make_dependencies=""

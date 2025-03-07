@@ -19,6 +19,8 @@ configure() {
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix" install
+	#sudo DESTDIR="$prefix" ninja install
+	#sudo meson install --destdir "$prefix"
+	sudo meson install 
 }
 

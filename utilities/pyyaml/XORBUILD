@@ -1,22 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=pyyaml
 ver=6.0.2
 dependencies=(
-pip3
 cython
 libyaml
 )
+#pip3
 
 make_dependencies=""
 url=https://files.pythonhosted.org/packages/source/P/PyYAML/pyyaml-6.0.2.tar.gz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo pip3 wheel -w dist --no-build-isolation --no-deps --no-cache-dir $PWD/..
+	sudo pip3 wheel -w dist --no-build-isolation --no-deps --no-cache-dir $PWD
 }
 
 build() {

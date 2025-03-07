@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-#set -e
-
-source $(dirname "$0")/../core/config.sh
+set -e
 
 name=rustc
 ver=1.84.1
@@ -11,12 +9,11 @@ llvm
 
 make_dependencies=""
 url=https://static.rust-lang.org/dist/rustc-1.84.1-src.tar.xz
-prefix=/var/xor/prefixes/$name
 
 configure() {
 
-sudo mkdir -p "$prefix/opt/rustc-1.84.1"
-sudo mkdir -p "$prefix/usr/share/doc/rustc-1.84.1"
+sudo mkdir -p "/opt/rustc-1.84.1"
+sudo mkdir -p "/usr/share/doc/rustc-1.84.1"
 
 sudo tee "config.toml" > /dev/null << EOF
 # see config.toml.example for more possible options
@@ -59,8 +56,8 @@ tools = ["cargo", "clippy", "rustdoc", "rustfmt"]
 vendor = true
 
 [install]
-prefix = "$prefix/opt/rustc-1.84.1"
-docdir = "$prefix/usr/share/doc/rustc-1.84.1"
+prefix = "/opt/rustc-1.84.1"
+docdir = "/usr/share/doc/rustc-1.84.1"
 
 [rust]
 channel = "stable"
@@ -82,27 +79,25 @@ llvm-config = "/usr/bin/llvm-config"
 llvm-config = "/usr/bin/llvm-config"
 EOF
 
-pushd ..
 	sudo sed '/MirOpt/d' -i src/bootstrap/src/core/builder/mod.rs
-popd
 
 [ ! -e /usr/include/libssh2.h ] || export LIBSSH2_SYS_USE_PKG_CONFIG=1
 [ ! -e /usr/include/sqlite3.h ] || export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
-sudo ../x.py build
+sudo ./x.py build
 
 }
 
 build() {
-	sudo ../x.py install rustc std &&
-	sudo ../x.py install --stage=1 cargo clippy rustfmt
+	sudo ./x.py install rustc std &&
+	sudo ./x.py install --stage=1 cargo clippy rustfmt
 
-sudo rm -fv $prefix/opt/rustsc-1.84.1/share/doc/rustc-1.84.1*.old &&
+sudo rm -fv /opt/rustsc-1.84.1/share/doc/rustc-1.84.1*.old &&
 #install -vm644 README.md                                \
 #               $prefix/opt/rustc-1.84.1/share/doc/rustc-1.84.1 &&
 
-install -vdm755 $prefix/usr/share/zsh/site-functions      &&
-ln -sfv $prefix/opt/rustc/share/zsh/site-functions/_cargo \
-        $prefix/usr/share/zsh/site-functions
+install -vdm755 /usr/share/zsh/site-functions      &&
+ln -sfv /opt/rustc/share/zsh/site-functions/_cargo \
+        /usr/share/zsh/site-functions
 
 #mv -v $prefix/etc/bash_completion.d/cargo $prefix/usr/share/bash-completion/completions
 }

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=niri
 ver=v25.02
 dependencies=(
@@ -11,14 +9,8 @@ rustc
 
 make_dependencies=""
 url=https://github.com/YaLTeR/niri/archive/refs/tags/v25.02.tar.gz
-prefix=/var/xor/prefixes/$name
-
-configure() {
-	echo "Without configure"
-}
-
 
 build() {
-	sudo cargo build --release --target-dir "$prefix"
+	sudo cargo build --no-default-features --features xdp-gnome-screencast --target-dir "$prefix"
 }
 

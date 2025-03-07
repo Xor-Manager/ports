@@ -22,6 +22,6 @@ configure() {
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix" install
+	sudo DESTDIR="$prefix" ninja install
 }
 

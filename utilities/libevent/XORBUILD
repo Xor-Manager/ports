@@ -1,24 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libevent
 ver=2.1.12-stable
 dependencies=()
 
 make_dependencies=""
 url=https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	
-	sudo cmake -D CMAKE_INSTALL_prefix=/usr ..
+	sudo cmake -D CMAKE_INSTALL_PREFIX=/usr .
 	sudo make
 
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
-

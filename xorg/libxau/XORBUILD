@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libxau
 ver=1.0.12
 dependencies=(
@@ -11,14 +9,13 @@ xorgproto
 
 make_dependencies=""
 url=https://www.x.org/pub/individual/lib/libXau-1.0.12.tar.xz
-prefix=/var/xor/prefixes/$name
 
 configure() {
-	sudo ../configure --prefix=/usr &&
+	sudo ./configure --prefix=/usr &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 

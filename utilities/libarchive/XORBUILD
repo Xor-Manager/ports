@@ -1,22 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libarchive
 ver=3.7.7
 dependencies=()
 
 make_dependencies=""
 url=https://github.com/libarchive/libarchive/releases/download/v3.7.7/libarchive-3.7.7.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo ../configure --prefix=/usr --disable-static &&
+	sudo ./configure --prefix=/usr --disable-static &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 

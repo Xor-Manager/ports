@@ -1,19 +1,16 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=llvm
 ver=19.1.7
 dependencies=()
 
 make_dependencies=""
 url=https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/llvm-19.1.7.src.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
 
-	pushd ../../
+	pushd ../
 		sudo bash <<- EOF
 			wget https://anduin.linuxfromscratch.org/BLFS/llvm/llvm-cmake-19.1.7.src.tar.xz &&
 			tar -xf ./llvm-cmake-19.1.7.src.tar.xz  &&
@@ -31,18 +28,18 @@ configure() {
 
 
 	sudo sed '/LLVM_COMMON_CMAKE_UTILS/s@../cmake@cmake-19.1.7.src@'          \
-		-i ../CMakeLists.txt                                                &&
+		-i ./CMakeLists.txt                                                &&
 
 	sudo sed '/LLVM_THIRD_PARTY_DIR/s@../third-party@third-party-19.1.7.src@' \
-		-i ../cmake/modules/HandleLLVMOptions.cmake
+		-i ./cmake/modules/HandleLLVMOptions.cmake
 
 
 
-	sudo mv ../../tools/clang-19.1.7.src ../tools/clang &&
-	sudo sed 's/utility/tool/' -i ../utils/FileCheck/CMakeLists.txt &&
+	sudo mv ../tools/clang-19.1.7.src ./tools/clang &&
+	sudo sed 's/utility/tool/' -i ./utils/FileCheck/CMakeLists.txt &&
 
-	sudo mv ../../cmake-19.1.7.src ../
-	sudo mv ../../third-party-19.1.7.src ../
+	sudo mv ../cmake-19.1.7.src ./
+	sudo mv ../third-party-19.1.7.src ./
 
 
 	#if [ ! -d "\$prefix/include" ]; then
@@ -66,10 +63,10 @@ configure() {
 		      -D LLVM_INCLUDE_BENCHMARKS=OFF         \
 		      -D CLANG_DEFAULT_PIE_ON_LINUX=ON       \
 		      -D CLANG_CONFIG_FILE_SYSTEM_DIR="/etc/clang" \
-		      -W no-dev -G Ninja ..                  &&
-		sudo ninja
+		      -W no-dev -G Ninja build                  &&
+		sudo ninja -C build
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix"install
+	sudo ninja install -C build
 }

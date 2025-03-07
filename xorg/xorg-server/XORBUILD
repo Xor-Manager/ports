@@ -17,6 +17,8 @@ xkeyboardconfig
 libtirpc
 libepoxy
 libpciaccess
+xorgproto
+libdrm
 )
 #xorg-Fonts
 #xorg-libinput
@@ -38,5 +40,5 @@ configure(){
 }
 
 build(){
-        sudo ninja DESTDIR="$prefix" install
+        sudo DESTDIR="$prefix" ninja install
 }

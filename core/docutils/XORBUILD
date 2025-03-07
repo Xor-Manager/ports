@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=docutils
 ver=0.21.2
 dependencies=(
@@ -11,10 +9,9 @@ pip3
 
 make_dependencies=""
 url=https://files.pythonhosted.org/packages/source/d/docutils/docutils-0.21.2.tar.gz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo pip3 wheel -w dist --no-build-isolation --no-deps --no-cache-dir $PWD/..
+	sudo pip3 wheel -w dist --no-build-isolation --no-deps --no-cache-dir $PWD
 }
 
 build() {

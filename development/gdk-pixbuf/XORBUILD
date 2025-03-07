@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=gdk-pixbuf
+ver=2.42.12
+dependencies=(
+	glib
+	libjpeg-turbo
+	libpng
+	shared-mime-info
+	)
+
+make_dependencies=""
+url=https://download.gnome.org/sources/gdk-pixbuf/2.42/gdk-pixbuf-2.42.12.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo meson setup .. --prefix=/usr --buildtype=release -D others=enabled --wrap-mode=nofallback &&
+	sudo ninja
+}
+
+build() {
+	sudo DESTDIR="$prefix" ninja install
+}
+

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=mesa
 ver=24.3.4
 dependencies=(
@@ -23,14 +21,13 @@ libxfixes
 
 make_dependencies=""
 url=https://mesa.freedesktop.org/archive/mesa-24.3.4.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo meson setup .. --prefix=/usr --buildtype=release -D platforms=x11,wayland -D gallium-drivers=radeonsi -D vulkan-drivers="" -D valgrind=disabled -D video-codecs=all -D libunwind=disabled &&
-	sudo ninja
+	sudo meson setup build --prefix=/usr --buildtype=release -D platforms=x11,wayland -D gallium-drivers=radeonsi -D vulkan-drivers="" -D valgrind=disabled -D video-codecs=all -D libunwind=disabled &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix" install
+	sudo ninja install -C build
 }
 

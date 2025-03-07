@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+source $(dirname "$0")/../core/config.sh
+
+name=libxcursor
+ver=1.2.3
+dependencies=()
+
+make_dependencies=""
+url=https://www.x.org/archive//individual/lib/libXcursor-1.2.3.tar.xz
+prefix=$MANAGER_PREFIX/$name
+
+configure() {
+	sudo ../configure --prefix=/usr --sysconfdir=/etc --disable-static &&
+	sudo make
+}
+
+build() {
+	sudo make DESTDIR="$prefix" install
+}
+

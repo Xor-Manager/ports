@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=xorgproto
 ver=2024.1
 dependencies=(
-util-macros
+"util-macros"
+"libxcb"
 )
 
 make_dependencies=""
 url=https://xorg.freedesktop.org/archive/individual/proto/xorgproto-2024.1.tar.xz
-prefix=/var/xor/prefixes/$name
 
 configure() {
-	sudo meson setup --prefix=/usr .. &&
-	sudo ninja
+	sudo meson setup --prefix=/usr build &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix" install 
+	sudo ninja install -C build
 }
 

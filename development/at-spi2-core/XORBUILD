@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -e
+
+ver=2.54.1
+dependencies=(
+	libxtst
+	gsettings-desktop-schemas
+	)
+#dbus	
+
+make_dependencies=""
+url=https://download.gnome.org/sources/at-spi2-core/2.54/at-spi2-core-2.54.1.tar.xz
+
+configure() {
+	sudo meson setup . --prefix=/usr --buildtype=release -D systemd_user_dir=/tmp &&
+	sudo ninja -C build
+}
+
+build() {
+	sudo ninja install -C build
+	#sudo rm /tmp/at-spi-dbus-bus.service
+}
+

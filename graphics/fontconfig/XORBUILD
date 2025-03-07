@@ -21,4 +21,3 @@ configure() {
 build() {
 	sudo make DESTDIR="$prefix" install
 }
-

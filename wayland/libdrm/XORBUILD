@@ -1,22 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libdrm
 ver=2.4.124
 dependencies=()
 
 make_dependencies=""
 url=https://dri.freedesktop.org/libdrm/libdrm-2.4.124.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo meson setup .. --prefix=/usr --buildtype=release -D udev=true -D valgrind=disabled &&
-	sudo ninja
+	sudo meson setup build --prefix=/usr --buildtype=release -D udev=true -D valgrind=disabled &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix" install
+	sudo ninja install -C build
 }
 

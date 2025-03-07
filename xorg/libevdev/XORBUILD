@@ -10,7 +10,7 @@ dependencies=()
 
 make_dependencies=""
 url=https://www.freedesktop.org/software/libevdev/libevdev-1.13.3.tar.xz
-prefix=$MANAGER_prefix/$name
+prefix=$MANAGER_PREFIX/$name
 
 configure() {
 	sudo meson setup .. --prefix=/usr --buildtype=release -D documentation=disabled &&
@@ -18,6 +18,6 @@ configure() {
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix" install
+	sudo DESTDIR="$prefix" ninja install
 }
 
