@@ -9,7 +9,7 @@ make_dependencies=""
 url=https://dri.freedesktop.org/libdrm/libdrm-2.4.124.tar.xz
 
 configure() {
-	sudo meson setup build --prefix=/usr --buildtype=release -D udev=true -D valgrind=disabled &&
+	sudo meson setup . --prefix=/usr --buildtype=release -D udev=true -D valgrind=disabled &&
 	sudo ninja -C build
 }
 

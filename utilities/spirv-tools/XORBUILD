@@ -13,7 +13,7 @@ url=https://github.com/KhronosGroup/SPIRV-Tools/archive/vulkan-sdk-1.4.304.1/SPI
 prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo cmake -D CMAKE_INSTALL_prefix=/usr -D CMAKE_BUILD_TYPE=release -D SPIRV_WERROR=OFF -D BUILD_SHARED_LIBS=ON -D SPIRV_TOOLS_BUILD_STATIC=OOF -D SPIRV-Headers_SOURCE_DIR=/usr -G Ninja build &&
+	sudo cmake -D CMAKE_INSTALL_prefix=/usr -D CMAKE_BUILD_TYPE=release -D SPIRV_WERROR=OFF -D BUILD_SHARED_LIBS=ON -D SPIRV_TOOLS_BUILD_STATIC=OOF -D SPIRV-Headers_SOURCE_DIR=/usr -G Ninja . &&
 	sudo ninja -C build
 }
 

@@ -11,7 +11,7 @@ make_dependencies=""
 url=https://github.com/KhronosGroup/SPIRV-Headers/archive/vulkan-sdk-1.4.304.1/SPIRV-Headers-vulkan-sdk1.4.304.1.tar.gz
 
 configure() {
-	sudo cmake -D CMAKE_INSTALL_prefix=/usr -G Ninja build &&
+	sudo cmake -D CMAKE_INSTALL_prefix=/usr -G Ninja . &&
 	sudo ninja -C build
 }
 

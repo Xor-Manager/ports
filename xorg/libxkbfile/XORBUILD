@@ -16,6 +16,6 @@ configure() {
 }
 
 build() {
-	sudo make install
+	sudo make install 
 }
 

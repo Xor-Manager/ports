@@ -1,23 +1,21 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libevdev
 ver=1.2.2
-dependencies=()
-#python
+dependencies=(
+	python3
+)
 
 make_dependencies=""
 url=https://www.freedesktop.org/software/libevdev/libevdev-1.13.3.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo meson setup .. --prefix=/usr --buildtype=release -D documentation=disabled &&
-	sudo ninja
+	sudo meson setup . --prefix=/usr --buildtype=release -D documentation=disabled &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo DESTDIR="$prefix" ninja install
+	sudo ninja install -C build
 }
 

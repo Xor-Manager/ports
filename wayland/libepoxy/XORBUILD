@@ -11,7 +11,7 @@ make_dependencies=""
 url=https://download.gnome.org/sources/libepoxy/1.5/libepoxy-1.5.10.tar.xz
 
 configure() {
-	sudo meson setup build --prefix=/usr --buildtype=release
+	sudo meson setup . --prefix=/usr --buildtype=release
 	sudo ninja -C build
 }
 

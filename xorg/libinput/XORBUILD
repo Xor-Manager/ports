@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libinput
 ver=0.5.0
 dependencies=(
@@ -12,14 +10,13 @@ mtdev
 
 make_dependencies=""
 url=https://gitlab.freedesktop.org/libinput/libinput/-/archive/1.27.1/libinput-1.27.1.tar.gz
-prefix=$MANAGER_prefix/$name
 
 configure() {
-	sudo meson setup .. --prefix=/usr --buildtype=release -D debug-gui=false -D tests=false -D libwacom=false -D udev-dir=/usr/lib/udev &&
-	sudo ninja
+	sudo meson setup . --prefix=/usr --buildtype=release -D debug-gui=false -D tests=false -D libwacom=false -D udev-dir=/usr/lib/udev &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix" install
+	sudo ninja install -C build
 }
 

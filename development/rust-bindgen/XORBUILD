@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=rust-bindgen
 ver=0.71.1
 dependencies=(
@@ -12,16 +10,9 @@ llvm
 
 make_dependencies=""
 url=https://github.com/rust-lang/rust-bindgen/archive/v0.71.1/rust-bindgen-0.71.1.tar.gz
-prefix=$MANAGER_PREFIX/$name
-
-configure() {
-	echo "Without config file"
-}
 
 build() {
-	pushd ..
-		sudo cargo build --release --target-dir "$prefix"
-	popd
+	sudo cargo build --release
 
 	#TODO: Need to add the bash/zsh completion
 }

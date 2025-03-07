@@ -12,7 +12,7 @@ make_dependencies=""
 url=https://xorg.freedesktop.org/archive/individual/proto/xorgproto-2024.1.tar.xz
 
 configure() {
-	sudo meson setup --prefix=/usr build &&
+	sudo meson setup --prefix=/usr . &&
 	sudo ninja -C build
 }
 

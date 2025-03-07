@@ -9,7 +9,7 @@ make_dependencies=""
 url=https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-2.44.tar.xz
 
 configure() {
-	sudo meson setup --prefix=/usr --buildtype=release build &&
+	sudo meson setup --prefix=/usr --buildtype=release . &&
 	sudo ninja -C build
 }
 

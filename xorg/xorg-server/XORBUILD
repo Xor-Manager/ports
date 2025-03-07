@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=xorg-server
 ver=21.1.13
 
@@ -19,16 +17,16 @@ libepoxy
 libpciaccess
 xorgproto
 libdrm
+libinput
 )
 #xorg-Fonts
 #xorg-libinput
 
 url=https://www.x.org/pub/individual/xserver/xorg-server-21.1.13.tar.xz
-prefix=/var/xor/prefixes/$name
 
 configure(){
 
-        sudo meson setup ..               \
+        sudo meson setup .               \
               --prefix=/usr  \
               --localstatedir=/var   \
               --sysconfdir=/usr   \
@@ -36,9 +34,9 @@ configure(){
               -D systemd_logind=true \
               -D xkb_output_dir=/var/lib/xkb &&
 
-        sudo ninja
+        sudo ninja -C build
 }
 
 build(){
-        sudo DESTDIR="$prefix" ninja install
+        sudo ninja install -C build
 }
