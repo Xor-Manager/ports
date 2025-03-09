@@ -3,28 +3,26 @@ set -e
 
 name=llvm
 ver=19.1.7
-dependencies=()
+dependencies=(
+	"cmake"
+	)
 
 make_dependencies=""
 url=https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/llvm-19.1.7.src.tar.xz
 
 configure() {
 
-	pushd ../
-		sudo bash <<- EOF
-			wget https://anduin.linuxfromscratch.org/BLFS/llvm/llvm-cmake-19.1.7.src.tar.xz &&
-			tar -xf ./llvm-cmake-19.1.7.src.tar.xz  &&
+	sudo wget https://anduin.linuxfromscratch.org/BLFS/llvm/llvm-cmake-19.1.7.src.tar.xz &&
+	sudo tar -xf ./llvm-cmake-19.1.7.src.tar.xz  &&
 
-			wget https://anduin.linuxfromscratch.org/BLFS/llvm/llvm-third-party-19.1.7.src.tar.xz &&
-			tar -xf ./llvm-third-party-19.1.7.src.tar.xz &&
+	sudo wget https://anduin.linuxfromscratch.org/BLFS/llvm/llvm-third-party-19.1.7.src.tar.xz &&
+	sudo tar -xf ./llvm-third-party-19.1.7.src.tar.xz &&
 
 
-			wget https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/clang-19.1.7.src.tar.xz &&
+	sudo wget https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/clang-19.1.7.src.tar.xz &&
 
-			mkdir -p tools &&
-			tar -xf ./clang-19.1.7.src.tar.xz -C tools
-	EOF
-	popd
+	sudo mkdir -p tools &&
+	sudo tar -xf ./clang-19.1.7.src.tar.xz -C tools
 
 
 	sudo sed '/LLVM_COMMON_CMAKE_UTILS/s@../cmake@cmake-19.1.7.src@'          \
@@ -35,23 +33,18 @@ configure() {
 
 
 
-	sudo mv ../tools/clang-19.1.7.src ./tools/clang &&
+	#sudo mv ../tools/clang-19.1.7.src ./tools/clang &&
 	sudo sed 's/utility/tool/' -i ./utils/FileCheck/CMakeLists.txt &&
 
-	sudo mv ../cmake-19.1.7.src ./
-	sudo mv ../third-party-19.1.7.src ./
+	#sudo mv ../cmake-19.1.7.src ./
+	#sudo mv ../third-party-19.1.7.src ./
 
 
-	#if [ ! -d "\$prefix/include" ]; then
-	#	sudo mkdir -p "$prefix/include"
-	#fi
-
-	#if [ ! -d "$prefix/etc" ]; then
-	#	sudo mkdir -p "$prefix/etc"
-	#fi
+	sudo mkdir -p build
+	cd build
 
 		CC=gcc CXX=g++                               \
-		sudo cmake -D CMAKE_INSTALL_prefix=/usr          \
+		sudo cmake -D CMAKE_INSTALL_PREFIX=/usr          \
 		      -D CMAKE_SKIP_INSTALL_RPATH=ON         \
 		      -D LLVM_ENABLE_FFI=ON                  \
 		      -D CMAKE_BUILD_TYPE=Release            \
@@ -59,14 +52,16 @@ configure() {
 		      -D LLVM_LINK_LLVM_DYLIB=ON             \
 		      -D LLVM_ENABLE_RTTI=ON                 \
 		      -D LLVM_TARGETS_TO_BUILD="host;AMDGPU" \
-		      -D LLVM_BINUTILS_INCDIR="/include"   \
+		      -D LLVM_BINUTILS_INCDIR="/usr/include"   \
 		      -D LLVM_INCLUDE_BENCHMARKS=OFF         \
 		      -D CLANG_DEFAULT_PIE_ON_LINUX=ON       \
 		      -D CLANG_CONFIG_FILE_SYSTEM_DIR="/etc/clang" \
-		      -W no-dev -G Ninja build                  &&
-		sudo ninja -C build
+		      -W no-dev -G Ninja ..                  &&
+		sudo ninja
 }
 
 build() {
-	sudo ninja install -C build
+	cd build
+	sudo ninja install
 }
+

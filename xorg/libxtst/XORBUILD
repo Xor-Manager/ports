@@ -1,22 +1,21 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libxtst
 ver=1.2.5
-dependencies=()
+dependencies=(
+	libxi
+	)
 
 make_dependencies=""
 url=https://www.x.org/archive//individual/lib/libXtst-1.2.5.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo ../configure --prefix=/usr
+	sudo ./configure --prefix=/usr
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$PREFIX" install
+	sudo make install
 }
 

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=fontconfig
 ver=2.16.0
 dependencies=(
@@ -11,13 +9,12 @@ freetype
 
 make_dependencies=""
 url=https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.16.0.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo ../configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-docs --docdir="$prefix"/usr/share/doc/fontconfig-2.16.0 &&
+	sudo ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-docs --docdir=/usr/share/doc/fontconfig-2.16.0 &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }

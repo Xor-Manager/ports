@@ -5,6 +5,7 @@ name=tmux
 ver=3.5a
 dependencies=(
 libevent
+cmake
 )
 #ncurses
 

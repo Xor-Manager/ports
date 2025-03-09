@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=gtk3
 ver=3.24.48
 dependencies=(
@@ -14,14 +12,13 @@ dependencies=(
 
 make_dependencies=""
 url=https://download.gnome.org/sources/gtk/3.24/gtk-3.24.48.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo meson setup .. --prefix=/usr --buildtype=release -D man=false -D broadway_backend=true &&
-	sudo ninja
+	sudo meson setup build --prefix=/usr --buildtype=release -D man=false -D broadway_backend=true &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo DESTDIR="$prefix" ninja install
+	sudo ninja install -C build
 }
 

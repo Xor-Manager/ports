@@ -5,14 +5,13 @@ name=xorgproto
 ver=2024.1
 dependencies=(
 "util-macros"
-"libxcb"
 )
 
 make_dependencies=""
 url=https://xorg.freedesktop.org/archive/individual/proto/xorgproto-2024.1.tar.xz
 
 configure() {
-	sudo meson setup --prefix=/usr . &&
+	sudo meson setup build --prefix=/usr &&
 	sudo ninja -C build
 }
 

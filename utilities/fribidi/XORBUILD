@@ -1,22 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=fribidi
 ver=1.0.16
 dependencies=()
 
 make_dependencies=""
 url=https://github.com/fribidi/fribidi/releases/download/v1.0.16/fribidi-1.0.16.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo meson setup .. --prefix=/usr --buildtype=release &&
-	sudo ninja
+	sudo meson setup build --prefix=/usr --buildtype=release &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo DESTDIR="$prefix" ninja install
+	sudo ninja install -C build
 }
 

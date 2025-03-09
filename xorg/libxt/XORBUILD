@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libxt
 ver=1.3.1
 dependencies=(
@@ -12,14 +10,13 @@ libsm
 
 make_dependencies=""
 url=https://www.x.org/archive//individual/lib/libXt-1.3.1.tar.xz
-prefix=$MANAGER_prefix/$name
 
 configure() {
-	sudo ../configure --prefix=/usr --with-appdefaultdir=/etc/X11/app-defaults &&
+	sudo ./configure --prefix=/usr --with-appdefaultdir=/etc/X11/app-defaults &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 

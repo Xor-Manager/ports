@@ -9,7 +9,7 @@ make_dependencies=""
 url=https://www.x.org/archive//individual/lib/libpciaccess-0.18.tar.xz
 
 configure() {
-	sudo meson setup . --prefix=/usr --buildtype=release &&
+	sudo meson setup build --prefix=/usr --buildtype=release &&
 	sudo ninja -C build
 }
 

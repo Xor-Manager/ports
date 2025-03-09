@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -e
+
+name=librsvg
+ver=2.58.3
+dependencies=(
+	gdk-pixbuf
+	cairo
+	pango
+	rustc
+	)
+
+make_dependencies=""
+url=https://download.gnome.org/sources/librsvg/2.58/librsvg-2.58.3.tar.xz
+
+configure() {
+	sudo ./configure --prefix=/usr    \
+            --enable-vala    \
+            --disable-static \
+            --docdir=/usr/share/doc/librsvg-2.58.3 &&
+	sudo make
+}
+
+build() {
+	sudo make DOC_INSTALL_DIR='$(docdir)' install
+}
+

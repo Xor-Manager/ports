@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libjpeg-turbo
 ver=3.0.1
 dependencies=(
@@ -11,14 +9,13 @@ dependencies=(
 
 make_dependencies=""
 url=https://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-3.0.1.tar.gz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=RELEASE -D ENABLE_STATIC=FALSE -D CMAKE_INSTALL_DEFAULT_LIBDIR=lib -D CMAKE_SKIP_INSTALL_RPATH=ON -D CMAKE_INSTALL_DOCDIR=/usr/share/doc/libjpeg-turbo-3.0.1 .. &&
+	sudo cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=RELEASE -D ENABLE_STATIC=FALSE -D CMAKE_INSTALL_DEFAULT_LIBDIR=lib -D CMAKE_SKIP_INSTALL_RPATH=ON -D CMAKE_INSTALL_DOCDIR=/usr/share/doc/libjpeg-turbo-3.0.1 . &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=xkbcommon
 ver=1.8.0
 dependencies=(
@@ -14,14 +12,13 @@ wayland-protocols
 
 make_dependencies=""
 url=https://github.com/xkbcommon/libxkbcommon/archive/xkbcommon-1.8.0/libxkbcommon-xkbcommon-1.8.0.tar.gz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo meson setup .. --prefix=/usr --buildtype=release -D enable-docs=false &&
-	sudo ninja
+	sudo meson setup build --prefix=/usr --buildtype=release -D enable-docs=false &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo DESTDIR="$prefix" ninja install
+	sudo ninja install -C build
 }
 

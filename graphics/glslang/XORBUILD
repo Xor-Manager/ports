@@ -10,14 +10,13 @@ spirv-tools
 
 make_dependencies=""
 url=https://github.com/KhronosGroup/glslang/archive/15.1.0/glslang-15.1.0.tar.gz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo cmake -D CMAKE_INSTALL_prefix=/usr -D CMAKE_BUILD_TYPE=Release -D ALLOW_EXTERNAL_SPIRV_TOOLS=ON -D BUILD_SHARED_LIBS=ON -D GLSLANG_TESTS=ON -G Ninja . &&
-	sudo ninja -C build
+	sudo cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D ALLOW_EXTERNAL_SPIRV_TOOLS=ON -D BUILD_SHARED_LIBS=ON -D GLSLANG_TESTS=ON -G Ninja . &&
+	sudo ninja
 }
 
 build() {
-	sudo ninja install -C build
+	sudo ninja install
 }
 

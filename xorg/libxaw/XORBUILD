@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libxaw
 ver=1.0.16
 dependencies=(
@@ -13,14 +11,13 @@ libxpm
 
 make_dependencies=""
 url=https://www.x.org/archive//individual/lib/libXaw-1.0.16.tar.xz
-prefix=$MANAGER_prefix/$name
 
 configure() {
-	sudo ../configure --prefix=/usr &&
+	sudo ./configure --prefix=/usr &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 

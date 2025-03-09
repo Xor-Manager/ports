@@ -9,7 +9,7 @@ make_dependencies=""
 url=https://www.cairographics.org/releases/pixman-0.44.2.tar.gz
 
 configure() {
-	sudo meson setup --prefix=/usr --buildtype=release . &&
+	sudo meson setup --prefix=/usr --buildtype=release build &&
 	sudo ninja -C build
 }
 

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=xkbutils
 ver=1.0.6
 dependencies=(
@@ -11,14 +9,13 @@ libxaw
 
 make_dependencies=""
 url=https://www.x.org/archive//individual/app/xkbutils-1.0.6.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo ../configure --prefix=/usr &&
+	sudo ./configure --prefix=/usr &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 

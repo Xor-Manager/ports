@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=shared-mime-info
 ver=2.4
 dependencies=(
@@ -12,14 +10,13 @@ dependencies=(
 
 make_dependencies=""
 url=https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/2.4/shared-mime-info-2.4.tar.gz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo meson setup .. --prefix=/usr --buildtype=release -D update-mimedb=true &&
-	sudo ninja
+	sudo meson setup build --prefix=/usr --buildtype=release -D update-mimedb=true &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo DESTDIR="$prefix" ninja install
+	sudo ninja install -C build
 }
 

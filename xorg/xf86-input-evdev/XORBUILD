@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=xf86-input-evdev
 ver=2.11.0
 dependencies=(
@@ -12,14 +10,13 @@ dependencies=(
 
 make_dependencies=""
 url=https://www.x.org/pub/individual/driver/xf86-input-evdev-2.11.0.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo ../configure --prefix=/usr &&
+	sudo ./configure --prefix=/usr &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 

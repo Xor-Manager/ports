@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=gsettings-desktop-schemas
 ver=47.1
 dependencies=(
@@ -11,13 +9,12 @@ dependencies=(
 
 make_dependencies=""
 url=https://download.gnome.org/sources/gsettings-desktop-schemas/47/gsettings-desktop-schemas-47.1.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo meson setup .. --prefix=/use --buildtype=release &&
-	sudo ninja
+	sudo meson setup build --prefix=/usr --buildtype=release &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo DESTDIR="$prefix" ninja install
+	sudo ninja install -C build
 }

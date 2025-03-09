@@ -1,22 +1,21 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=harfbuzz
 ver=10.2.0
-dependencies=()
+dependencies=(
+	"graphite2"
+	)
 
 make_dependencies=""
 url=https://github.com/harfbuzz/harfbuzz/releases/download/10.2.0/harfbuzz-10.2.0.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo meson setup .. --libdir=/usr/lib  --includedir=/usr/include --bindir=/usr/bin --datadir=/usr/share --prefix=/usr --buildtype=release -D graphite2=enabled &&
-	sudo ninja
+	sudo meson setup build --libdir=/usr/lib  --includedir=/usr/include --bindir=/usr/bin --datadir=/usr/share --prefix=/usr --buildtype=release -D graphite2=enabled &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo ninja DESTDIR="$prefix" install
+	sudo ninja install -C build
 }
 

@@ -11,7 +11,7 @@ make_dependencies=""
 url=https://www.freedesktop.org/software/libevdev/libevdev-1.13.3.tar.xz
 
 configure() {
-	sudo meson setup . --prefix=/usr --buildtype=release -D documentation=disabled &&
+	sudo meson setup build --prefix=/usr --buildtype=release -D documentation=disabled &&
 	sudo ninja -C build
 }
 

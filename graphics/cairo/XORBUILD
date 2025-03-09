@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=cairo
 ver=1.18.2
 dependencies=(
@@ -12,20 +10,17 @@ libpng
 
 make_dependencies=""
 url=https://www.cairographics.org/releases/cairo-1.18.2.tar.xz
-prefix=$MANAGER_PREFIX/$name
 
 configure() {
-	sudo wget -O ../cairo-1.18.2-upstream_fixes-1.patch https://www.linuxfromscratch.org/patches/blfs/svn/cairo-1.18.2-upstream_fixes-1.patch
+	sudo wget -O ./cairo-1.18.2-upstream_fixes-1.patch https://www.linuxfromscratch.org/patches/blfs/svn/cairo-1.18.2-upstream_fixes-1.patch
 
-	pushd ..
-		sudo patch -Np1 -i cairo-1.18.2-upstream_fixes-1.patch
-	popd
+	sudo patch -Np1 -i cairo-1.18.2-upstream_fixes-1.patch
 
-	sudo meson setup .. --prefix=/usr --buildtype=release &&
-	sudo ninja
+	sudo meson setup build --prefix=/usr --buildtype=release &&
+	sudo ninja -C build
 }
 
 build() {
-	sudo DESTDIR="$prefix" ninja install
+	sudo ninja install -C build
 }
 

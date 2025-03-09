@@ -1,22 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
-source $(dirname "$0")/../core/config.sh
-
 name=libxpm
 ver=3.5.17
 dependencies=()
 
 make_dependencies=""
 url=https://www.x.org/archive//individual/lib/libXpm-3.5.17.tar.xz
-prefix=$MANAGER_prefix/$name
 
 configure() {
-	sudo ../configure --prefix=/usr --disable-open-zfile &&
+	sudo ./configure --prefix=/usr --disable-open-zfile &&
 	sudo make
 }
 
 build() {
-	sudo make DESTDIR="$prefix" install
+	sudo make install
 }
 
